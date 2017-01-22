@@ -1,0 +1,51 @@
+﻿@model HeroesOfTheColliseumMvc.ViewModels.BattleViewModel
+@{
+    ViewBag.Title = "Battle Arena";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Battle Arena</h2>
+
+<div class="jumbotron">
+    <div class="container">
+        <div class="row" style="position: absolute; top: 10%; width: 100%">
+            <div class="col-md-4"><p class="arenapara"><strong>@Model.Hero.Name</strong></p></div>
+            <div class="col-md-4"><p class="arenavs">VS</p></div>
+            <div class="col-md-4"><p class="arenapara"><strong>@Model.Monster.Name</strong></p></div>
+        </div>
+
+        <div class="row" style="position: absolute; bottom: 10%; width: 100%;">
+            <div class="col-md-4" style="padding-left: 10%">
+                <img src="@Model.Hero.ImageUrl" alt="Image" class="portrait" />
+            </div>
+            <div class="col-md-3 attackDiv">
+
+            </div>
+            <div class="col-md-4">
+                <img src="@Model.Monster.ImageUrl" alt="Image" class="portrait"/>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="arenaRow">
+    <div class="container">
+        <div class="row" style="position: absolute; width: 100%; left: 10%">
+            <div class="col-md-4">
+                <p class="arenaHp">@Model.Hero.HitPoints</p>
+            </div>
+            <div class="col-md-4">
+                <button type="button" class="attackButton" onclick="location.href='@Url.Action("Attack", "Battle")'">Attack</button>
+            </div>
+            <div class="col-md-4">
+                <p class="arenaHp">@Model.Monster.HitPoints</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+

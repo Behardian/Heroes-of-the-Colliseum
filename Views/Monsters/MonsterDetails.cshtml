@@ -1,0 +1,30 @@
+﻿@model HeroesOfTheColliseumMvc.Models.Monster
+@{
+    ViewBag.Title = Model.Name;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@Model.Name</h2>
+
+<table class="table table-hover characterTable">
+    <thead>
+        <tr>
+            <th></th>
+            <th>Name</th>
+            <th>Attack</th>
+            <th>Defence</th>
+            <th>Critical</th>
+            <th>Hit Points</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><img src="@Model.ImageUrl" alt="Image" class="portrait" /></td>
+            <td>@Model.Name</td>
+            <td>@Model.Attack</td>
+            <td>@Model.Defence</td>
+            <td>@Model.CritDam</td>
+            <td>@Model.HitPoints</td>
+        </tr>
+    </tbody>
+</table>

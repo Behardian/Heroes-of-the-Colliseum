@@ -1,0 +1,29 @@
+﻿@model IEnumerable<HeroesOfTheColliseumMvc.Models.Hero>
+@{
+    ViewBag.Title = "Character Select";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Select your Hero</h2>
+
+<div class="container">
+    <div>
+        @foreach (var hero in Model)
+        {
+            <div class="col-md-4 portraitContainer">
+                <h1>@Html.ActionLink(hero.Name, "HeroDetails", "Heroes", new { id = hero.Id }, null)</h1>
+                <a href='@Url.Action("BattleArena", "Battle", new {id=hero.Id}, null)'><img src="@hero.ImageUrl" alt="Image" class="portrait" /></a>
+                <table class="table table-bordered table-hover characterTable">
+                    <thead>                        
+                    </thead>
+                    <tbody>
+                        <tr><td>Attack:</td> <td>@hero.Attack</td></tr>
+                        <tr><td>Defence:</td> <td>@hero.Defence</td></tr>
+                        <tr><td>Critical:</td> <td>@hero.CritDam</td></tr>
+                        <tr><td>Hit Points:</td> <td>@hero.HitPoints</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        }
+    </div>
+</div>
