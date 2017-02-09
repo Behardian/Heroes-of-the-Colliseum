@@ -59,11 +59,11 @@ audio:not([controls]) {
 html {
   font-family: elmessiri-regular;
   -webkit-text-size-adjust: 100%;
-	  -ms-text-size-adjust: 100%;
+	  -ms-text-size-adjust: 100%;	  
 }
 
 body {
-  margin: 0;
+  margin: 0;  
 }
 
 a:focus {
@@ -4934,7 +4934,7 @@ a.list-group-item.active > .badge,
 
 .jumbotron {
   position: relative;    
-  height: 630px; 
+  height: auto;
   background: url("/Images/arenawallpaper.png");
   width: auto; 
   position: relative;
@@ -6891,21 +6891,30 @@ td.visible-print {
 	padding: 10%;
 	padding-left: 25%;
 	font-size: 40px;
+	color: white;
+	left: 30%;
+	align-items: center;
 }
 
 .arenaHp {
 	border: 5px solid #a00606;
-	padding: 10px;
-	font-size: 55px;
+	padding: 8px;
+	font-size: 55px;	
 	width: 100px;
 	height:100px;
 	text-align: center;
+	background-color: #28221e;
+	color: white;
 }
 
 .arenaJumbo {	
+	background: url("/Images/arenawallpaper.png");
 	height: 630px; 
 	width: auto; 
 	position: relative;	
+	overflow: hidden;
+	background-size: cover;
+	border: 2px solid #000;
 }
 
 .arenaRow {    	
@@ -6913,6 +6922,31 @@ td.visible-print {
 	height: 150px; 
 	width: auto; 
 	position: relative;	
-	border: 2px solid;
+	border: 2px solid #000;
+}
+
+.arenaHealth {
+	 position: absolute; 
+	 width: 100%; 
+	 left: 10%;
+	 top: 10%;
+}
+
+.arenaRowTop {
+	position: absolute; 
+	top: 10%; 
+	width: 100%;
+	left: 8%;
+}
+
+.arenaContainer {	
+	left: 100px;
+}
+
+.arenaCharacterRow {
+	position: absolute;
+	width: 100%;
+	bottom: 10%;
+	left: 13%;
 }
 

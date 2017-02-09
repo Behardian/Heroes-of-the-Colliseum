@@ -10,5 +10,11 @@ namespace HeroesOfTheColliseumMvc.ViewModels
     {
         public Monster Monster { get; set; }
         public Hero Hero { get; set; }
+
+        public BattleViewModel (Hero hero, Monster monster)
+        {
+            Hero = hero;
+            Monster = monster;
+        }
     }
 }

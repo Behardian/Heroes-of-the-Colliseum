@@ -3,12 +3,13 @@ using System.Linq;
 using System.Web.Mvc;
 using HeroesOfTheColliseumMvc.Models;
 using HeroesOfTheColliseumMvc.ViewModels;
+using System.Text;
 
 namespace HeroesOfTheColliseumMvc.Controllers
 {
     public class BattleController : Controller
-    {       
-        private ApplicationDbContext _context;
+    {      
+        private ApplicationDbContext _context;        
 
         public BattleController()
         {
@@ -18,16 +19,13 @@ namespace HeroesOfTheColliseumMvc.Controllers
         protected override void Dispose(bool disposing)
         {
             _context.Dispose();
-        }        
+        }    
 
         public ActionResult Index()
-        {
-            var heroNames = _context.Heroes.ToList();
-            var viewModel = new BattleViewModel();
-
-            return View(viewModel);
-        }
-
+        {           
+            return View();
+        }        
+        
         public ViewResult CharacterSelect()
         {
           var heroes = _context.Heroes.ToList();
@@ -36,45 +34,41 @@ namespace HeroesOfTheColliseumMvc.Controllers
         }
         
         public ActionResult BattleArena(int? id)
-        {
-            // Generate a random monster opponent
+        {           
             Random random = new Random();
+            var monsterId = random.Next(8);           
+
+            Monster arenaMonster = _context.Monsters.SingleOrDefault(m => m.Id == monsterId);
+            Hero arenaHero = _context.Heroes.SingleOrDefault(m => m.Id == id);
+
+            var battleViewModel = new BattleViewModel(arenaHero, arenaMonster);            
             
-            var monsterId = random.Next(8);
-            var monster = _context.Monsters.SingleOrDefault(m => m.Id == monsterId);
-            var hero = _context.Heroes.SingleOrDefault(m => m.Id == id);            
-
-            var model = new BattleViewModel { Monster = monster, Hero = hero };      
-
-            return View(model);
-        }
-
-        public ActionResult Attack(int? id)
+            return View(battleViewModel);        }                
+        
+        [HttpPost]
+        public ActionResult Attack(int? id, int? mid)
         {
             var hero = _context.Heroes.SingleOrDefault(m => m.Id == id);
-            var monster = _context.Monsters.SingleOrDefault(m => m.Id == id);
-            Random random = new Random();
+            var monster = _context.Monsters.SingleOrDefault(m => m.Id == mid);
 
-            int AttackRoll = random.Next(hero.Attack);
-            int DefenceRoll = random.Next(monster.Attack);
-            int damage = 0;
+            var attackBattleViewModel = new BattleViewModel(hero, monster);
 
-            if (AttackRoll > DefenceRoll)
-            {
-                damage += random.Next(hero.CritDam);
-                damage += hero.Attack - monster.Defence;
+            if (hero != null && monster != null)
+            {                
+                Dice newDice = new Dice();
+
+                int heroDamage = attackBattleViewModel.Hero.AttackRoll(newDice);
+                attackBattleViewModel.Monster.Defend(heroDamage);
+
+                int monsterDamage = attackBattleViewModel.Monster.AttackRoll(newDice);
+                attackBattleViewModel.Hero.Defend(monsterDamage);                
+
+                return View(attackBattleViewModel);
             }
             else
             {
-                damage = 0;
+                return HttpNotFound();
             }
-            int monsterHp = monster.HitPoints;
-            monsterHp -= damage;
-            monster.HitPoints = Convert.ToByte(monsterHp);
-
-            var Monster = new MonsterViewModel { HitPoints = monster.HitPoints, };            
-
-            return View(Monster);
-        }
+        }        
     }
 }
